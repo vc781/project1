@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Event Coordination</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.event-creation, .event-list, .chat-section {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+input, textarea, button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#chat-box {
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Event Coordination Platform</h1>
+    </header>
+    <div class="event-creation">
+        <h2>Create a New Event</h2>
+        <input type="text" id="event-name" placeholder="Event Name">
+        <input type="date" id="event-date">
+        <input type="time" id="event-time">
+        <textarea id="event-description" placeholder="Event Description"></textarea>
+        <button id="create-event">Create Event</button>
+    </div>
+    <div class="event-list">
+        <h2>Your Events</h2>
+        <ul id="event-list"></ul>
+    </div>
+    <div class="chat-section">
+        <h2>Event Communication</h2>
+        <div id="chat-box"></div>
+        <input type="text" id="chat-input" placeholder="Type a message...">
+        <button id="send-chat">Send</button>
+    </div>
+
+    <script>let events = [];
+
+        // Function to create an event
+        document.getElementById('create-event').addEventListener('click', function() {
+            const name = document.getElementById('event-name').value;
+            const date = document.getElementById('event-date').value;
+            const time = document.getElementById('event-time').value;
+            const description = document.getElementById('event-description').value;
+        
+            if (!name || !date || !time || !description) {
+                alert("Please fill out all fields.");
+                return;
+            }
+        
+            const event = {
+                name,
+                date,
+                time,
+                description
+            };
+        
+            events.push(event);
+            renderEvents();
+        
+            // Clear inputs
+            document.getElementById('event-name').value = '';
+            document.getElementById('event-date').value = '';
+            document.getElementById('event-time').value = '';
+            document.getElementById('event-description').value = '';
+        });
+        
+        // Function to render events
+        function renderEvents() {
+            const eventList = document.getElementById('event-list');
+            eventList.innerHTML = '';
+            events.forEach(event => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <strong>${event.name}</strong> - ${event.date} at ${event.time}<br>
+                    <em>${event.description}</em>
+                `;
+                eventList.appendChild(li);
+            });
+        }
+        
+        // Chat functionality
+        document.getElementById('send-chat').addEventListener('click', function() {
+            const message = document.getElementById('chat-input').value;
+            if (!message) {
+                alert("Please enter a message.");
+                return;
+            }
+        
+            const chatBox = document.getElementById('chat-box');
+            const p = document.createElement('p');
+            p.textContent = message;
+            chatBox.appendChild(p);
+        
+            document.getElementById('chat-input').value = '';
+        });</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seamless Group Management</title>
+    <style>
+    .group-container {
+        max-width: 600px;
+        margin: auto;
+    }
+    .group-list {
+        margin-top: 20px;
+    }
+    .group-list-item {
+        padding: 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+    }
+    .group-list-item h3 {
+        margin: 0;
+    }
+    body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.create-group-form, .group-list {
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+input, textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+li button {
+    margin-left: 10px;
+    padding: 5px;
+    font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<div class="group-container">
+    <h1>Create a Group</h1>
+    <form id="group-form">
+        <label for="group-name">Group Name:</label>
+        <input type="text" id="group-name" required>
+        <br><br>
+        <label for="group-description">Description:</label>
+        <textarea id="group-description" required></textarea>
+        <br><br>
+        <button type="submit">Create Group</button>
+    </form>
+
+    <div class="group-list">
+        <h2>Your Groups</h2>
+        <div id="groups-container"></div>
+    </div>
+</div>
+
+<script>
+    let groups = [];
+
+document.getElementById('group-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const groupName = document.getElementById('group-name').value;
+    const groupDescription = document.getElementById('group-description').value;
+    
+    if (groupName && groupDescription) {
+        // Simulate group creation (replace with API POST request)
+        const newGroup = {
+            id: groups.length + 1,
+            name: groupName,
+            description: groupDescription
+        };
+        groups.push(newGroup);
+        
+        // Reset form
+        document.getElementById('group-form').reset();
+        
+        // Update UI
+        renderGroups();
+    }
+});
+
+// Function to render the group list
+function renderGroups() {
+    const groupContainer = document.getElementById('groups-container');
+    groupContainer.innerHTML = '';
+
+    if (groups.length === 0) {
+        groupContainer.innerHTML = '<p>No groups created yet.</p>';
+    } else {
+        groups.forEach(group => {
+            const groupElement = document.createElement('div');
+            groupElement.classList.add('group-list-item');
+            groupElement.innerHTML = `
+                <h3>${group.name}</h3>
+                <p>${group.description}</p>
+                <button onclick="deleteGroup(${group.id})">Delete</button>
+            `;
+            groupContainer.appendChild(groupElement);
+        });
+    }
+}
+
+// Function to delete a group
+function deleteGroup(groupId) {
+    groups = groups.filter(group => group.id !== groupId);
+    renderGroups();
+}
+
+// Initial rendering
+renderGroups();
+</script>
+
+</body>
+</html

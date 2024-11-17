@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Engagement Program</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+input, textarea, select, button {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 300px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#faculty-dashboard, #student-dashboard {
+    margin-top: 20px;
+}
+    </style>
+</head>
+<body>
+    <h1>Campus Engagement Program</h1>
+    <div id="role-selection">
+        <h3>Select Your Role</h3>
+        <button onclick="selectRole('faculty')">Faculty</button>
+        <button onclick="selectRole('student')">Student</button>
+    </div>
+    <div id="faculty-dashboard" style="display:none;">
+        <h2>Faculty Dashboard</h2>
+        <div>
+            <h3>Create an Event</h3>
+            <input type="text" id="event-title" placeholder="Event Title">
+            <textarea id="event-description" placeholder="Event Description"></textarea>
+            <input type="date" id="event-date">
+            <button onclick="createEvent()">Create Event</button>
+        </div>
+        <div>
+            <h3>Event List</h3>
+            <ul id="faculty-event-list"></ul>
+        </div>
+    </div>
+    <div id="student-dashboard" style="display:none;">
+        <h2>Student Dashboard</h2>
+        <div>
+            <h3>Available Events</h3>
+            <ul id="student-event-list"></ul>
+        </div>
+
+        <div>
+            <h3>Register for an Event</h3>
+            <select id="select-event"></select>
+            <button onclick="registerForEvent()">Register</button>
+        </div>
+
+        <div>
+            <h3>Your Registered Events</h3>
+            <ul id="registered-event-list"></ul>
+        </div>
+
+        <div>
+            <h3>Event Feedback & Suggestions</h3>
+            <textarea id="feedback" placeholder="Enter your feedback or suggestions"></textarea>
+            <button onclick="submitFeedback()">Submit Feedback</button>
+        </div>
+    </div>
+
+    <script>let events = [];
+        let registrations = [];
+        let feedbacks = [];
+        
+        // Role selection
+        function selectRole(role) {
+            document.getElementById('role-selection').style.display = 'none';
+            if (role === 'faculty') {
+                document.getElementById('faculty-dashboard').style.display = 'block';
+            } else {
+                document.getElementById('student-dashboard').style.display = 'block';
+                populateStudentEvents();
+                populateRegisteredEvents();
+            }
+        }
+        function createEvent() {
+            let title = document.getElementById('event-title').value;
+            let description = document.getElementById('event-description').value;
+            let date = document.getElementById('event-date').value;
+        
+            if (title && description && date) {
+                events.push({ title, description, date });
+                alert("Event Created: " + title);
+                populateEventList();
+                document.getElementById('event-title').value = '';
+                document.getElementById('event-description').value = '';
+                document.getElementById('event-date').value = '';
+            }
+        }
+        function populateEventList() {
+            let eventList = document.getElementById('faculty-event-list');
+            eventList.innerHTML = '';
+            events.forEach(event => {
+                let li = document.createElement('li');
+                li.textContent = $(event.title) - $(event.description) (Date$(event.date));
+                eventList.appendChild(li);
+            });
+        }
+        function populateStudentEvents() {
+            let eventDropdown = document.getElementById('select-event');
+            let eventList = document.getElementById('student-event-list');
+            
+            eventDropdown.innerHTML = '';
+            eventList.innerHTML = '';
+            
+            events.forEach(event => {
+                let option = document.createElement('option');
+                option.value = event.title;
+                option.textContent = $(event.title) (Date$(event.date));
+                eventDropdown.appendChild(option);
+                let li = document.createElement('li');
+                li.textContent = $(event.title) - $(event.description) (Date$(event.date));
+                eventList.appendChild(li);
+            });
+        }
+        function registerForEvent() {
+            let selectedEvent = document.getElementById('select-event').value;
+        
+            if (selectedEvent && !registrations.includes(selectedEvent)) {
+                registrations.push(selectedEvent);
+                alert("Registered for Event: " + selectedEvent);
+                populateRegisteredEvents();
+            } else if (registrations.includes(selectedEvent)) {
+                alert("You are already registered for this event.");
+            }
+        }
+        function populateRegisteredEvents() {
+            let registeredList = document.getElementById('registered-event-list');
+            registeredList.innerHTML = '';
+            
+            registrations.forEach(event => {
+                let li = document.createElement('li');
+                li.textContent = event;
+                registeredList.appendChild(li);
+            })
+        }
+        function submitFeedback() {
+            let feedbackText = document.getElementById('feedback').value;
+            
+            if (feedbackText) {
+                feedbacks.push(feedbackText);
+                alert("Feedback Submitted");
+                document.getElementById('feedback').value = '';
+            }
+        }</script>
+</body>
+</html>

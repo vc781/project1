@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Recommendation System</title>
+    <style>
+        .interest-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .interest-item label {
+            margin-left: 5px;
+        } 
+        h1 {
+      text-align: center;
+      color: #333;  }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .button container{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Group Recommendation System</h1>
+    </header>
+    <h2>Select Your Interests</h2>
+    <form>
+        <div class="interest-item">
+            <input type="checkbox" id="technology" name="interests">
+            <label for="technology">Technology</label>
+        </div>
+        <div class="interest-item">
+            <input type="checkbox" id="sports" name="interests">
+            <label for="sports">Sports</label>
+        </div>
+        <div class="interest-item">
+            <input type="checkbox" id="cooking" name="interests">
+            <label for="cooking">Cooking</label>
+        </div>
+        <div class="interest-item">
+            <input type="checkbox" id="music" name="interests">
+            <label for="music">Music</label>
+        </div>
+        <div
+            class="button-container">
+            <button  type="submit" id="submit">Submit Interests</button>
+        </div>    
+    </form>
+
+    <h2>Recommended Groups</h2>
+    <div class="interest-item">
+        <input type="checkbox" id="tech-group" name="groups">
+        <label for="tech-group">Technology group</label>
+    </div>
+    <div class="interest-item">
+        <input type="checkbox" id="sports-group" name="groups">
+        <label for="sports-group">Sports group</label>
+    </div>
+    <div class="interest-item">
+        <input type="checkbox" id="cooking-group" name="groups">
+        <label for="cooking-group">Cooking group</label>
+    </div>
+    <div>
+        <lable id="grp3"><input type="checkbox"> Music group</lable>
+    </div>
+</body>
+</html>

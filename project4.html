@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborative Learning Platform</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+input, textarea, select, button {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 300px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#teacher-dashboard, #student-dashboard {
+    margin-top: 20px;
+}
+    </style>
+</head>
+<body>
+    <h1>Collaborative Learning Platform</h1>
+    <div id="role-selection">
+        <h3>Select Role</h3>
+        <button onclick="selectRole('teacher')">Teacher</button>
+        <button onclick="selectRole('student')">Student</button>
+    </div>
+    <div id="teacher-dashboard" style="display:none;">
+        <h2>Teacher Dashboard</h2>
+        <div>
+            <h3>Create a Course</h3>
+            <input type="text" id="course-name" placeholder="Course Name">
+            <textarea id="course-description" placeholder="Course Description"></textarea>
+            <button onclick="createCourse()">Create Course</button>
+        </div>
+
+        <div>
+            <h3>Post an Assignment</h3>
+            <select id="select-course"></select>
+            <input type="text" id="assignment-title" placeholder="Assignment Title">
+            <input type="date" id="assignment-deadline">
+            <button onclick="postAssignment()">Post Assignment</button>
+        </div>
+
+        <div>
+            <h3>View Submissions</h3>
+            <ul id="teacher-submissions-list"></ul>
+        </div>
+    </div>
+    <div id="student-dashboard" style="display:none;">
+        <h2>Student Dashboard</h2>
+        <div>
+            <h3>Your Courses</h3>
+            <ul id="student-courses-list"></ul>
+        </div>
+
+        <div>
+            <h3>Submit Assignment</h3>
+            <select id="select-assignment"></select>
+            <input type="file" id="assignment-file">
+            <button onclick="submitAssignment()">Submit Assignment</button>
+        </div>
+
+        <div>
+            <h3>Your Feedback</h3>
+            <ul id="student-feedback-list"></ul>
+            <textarea placeholder="Your Feedback" required></textarea>
+            <button onclick="submitFeedback()">Submit Feedback</button>
+        </div>
+    </div>
+
+    <script>
+        let courses = [];
+let assignments = [];
+let submissions = [];
+let feedbacks = [];
+function selectRole(role) {
+    document.getElementById('role-selection').style.display = 'none';
+    if (role === 'teacher') {
+        document.getElementById('teacher-dashboard').style.display = 'block';
+    } else {
+        document.getElementById('student-dashboard').style.display = 'block';
+        populateStudentCourses();
+        populateAssignments();
+        populateFeedback();
+    }
+}
+function createCourse() {
+    let courseName = document.getElementById('course-name').value;
+    let courseDescription = document.getElementById('course-description').value;
+
+    if (courseName) {
+        courses.push({ name: courseName, description: courseDescription });
+        alert("Course Created: " + courseName);
+        populateCoursesDropdown();
+        document.getElementById('course-name').value = '';
+        document.getElementById('course-description').value = '';
+    }
+}
+function postAssignment() {
+    let course = document.getElementById('select-course').value;
+    let assignmentTitle = document.getElementById('assignment-title').value;
+    let deadline = document.getElementById('assignment-deadline').value;
+
+    if (course && assignmentTitle && deadline) {
+        assignments.push({ course, title: assignmentTitle, deadline });
+        alert("Assignment Posted: " + assignmentTitle);
+        populateAssignments();
+        document.getElementById('assignment-title').value = '';
+        document.getElementById('assignment-deadline').value = '';
+    }
+}
+function populateCoursesDropdown() {
+    let courseDropdown = document.getElementById('select-course');
+    courseDropdown.innerHTML = '';
+    courses.forEach(course => {
+        let option = document.createElement('option');
+        option.value = course.name;
+        option.textContent = course.name;
+        courseDropdown.appendChild(option);
+    });
+}
+function populateStudentCourses() {
+    let courseList = document.getElementById('student-courses-list');
+    courseList.innerHTML = '';
+    courses.forEach(course => {
+        let li = document.createElement('li');
+        li.textContent = course.name + ': ' + course.description;
+        courseList.appendChild(li);
+    });
+}
+function populateAssignments() {
+    let assignmentDropdown = document.getElementById('select-assignment');
+    assignmentDropdown.innerHTML = '';
+    assignments.forEach(assignment => {
+        let option = document.createElement('option');
+        option.value = assignment.title;
+        option.textContent = $(assignment.course) (assignment.title) (Due (assignment.deadline));
+        assignmentDropdown.appendChild(option);
+    });
+}
+function submitAssignment() {
+    let assignment = document.getElementById('select-assignment').value;
+    let file = document.getElementById('assignment-file').value;
+
+    if (assignment && file) {
+        submissions.push({ assignment, file });
+        alert("Assignment Submitted: " + assignment);
+        document.getElementById('assignment-file').value = '';
+        populateSubmissionsForTeacher();
+    }
+}
+function populateSubmissionsForTeacher() {
+    let submissionList = document.getElementById('teacher-submissions-list');
+    submissionList.innerHTML = '';
+    submissions.forEach(submission => {
+        let li = document.createElement('li');
+        li.textContent = $(submission.assignment) - File (submission.file);
+        submissionList.appendChild(li);
+    })
+}
+function populateFeedback() {
+    let feedbackList = document.getElementById('student-feedback-list');
+    feedbackList.innerHTML = '';
+    feedbacks.forEach(fb => {
+        let li = document.createElement('li');
+        li.textContent = (fb.assignment) (fb.comment);
+        feedbackList.appendChild(li);
+    });
+}
+    </script>
+</body>
+</html>
