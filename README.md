@@ -1,2 +1,2 @@
-# project1
-groupify -an ultimate collaboration hub 
+# Project1
+Groupify -An Ultimate Collaboration Hub 
